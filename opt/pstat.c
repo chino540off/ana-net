@@ -556,14 +556,12 @@ static void version(void)
 	printf("License: GNU GPL version 2\n");
 	printf("This is free software: you are free to change and redistribute it.\n");
 	printf("There is NO WARRANTY, to the extent permitted by law.\n\n");
-
 	die();
 }
 
 static void reaper(int sig)
 {
 	int pid, status;
-
 	while ((pid = waitpid(-1, &status, WNOHANG)) > 0)
 		;
 }
@@ -577,19 +575,16 @@ static inline void register_signal(int signal, void (*handler)(int))
 {
 	sigset_t block_mask;
 	struct sigaction saction;
-
 	sigfillset(&block_mask);
 	saction.sa_handler = handler;
 	saction.sa_mask = block_mask;
 	saction.sa_flags = SA_RESTART;
-
 	sigaction(signal, &saction, NULL);
 }
 
 static inline unsigned long long rdclock(void)
 {
 	struct timespec ts;
-
 	clock_gettime(CLOCK_MONOTONIC, &ts);
 	return ts.tv_sec * 1000000000ULL + ts.tv_nsec;
 }
@@ -600,7 +595,6 @@ static inline void panic(char *msg, ...)
 	va_start(vl, msg);
 	vfprintf(stderr, msg, vl);
 	va_end(vl);
-
 	die();
 }
 
@@ -615,16 +609,13 @@ static inline void whine(char *msg, ...)
 static void *xzmalloc(size_t size)
 {
 	void *ptr;
-
 	if (unlikely(size == 0))
 		panic("xzmalloc: zero size\n");
-
 	ptr = malloc(size);
 	if (unlikely(ptr == NULL))
 		panic("xzmalloc: out of memory (allocating %lu bytes)\n",
 		      (u_long) size);
 	memset(ptr, 0, size);
-
 	return ptr;
 }
 
@@ -683,7 +674,6 @@ static struct perf_data *initialize(pid_t pid, int cpu, int mode, int excl)
 	struct perf_data *pd;
 	struct perf_event_attr *attr;
 	struct perf_event_attr *attrs;
-
 	pd = xzmalloc(sizeof(*pd));
 	if (pid < 0)
 		pid = gettid();
@@ -692,14 +682,11 @@ static struct perf_data *initialize(pid_t pid, int cpu, int mode, int excl)
 		pd->fds[i] = FDS_INVALID;
 	pd->pid = pid;
 	pd->cpu = cpu;
-
 	attrs = xzmalloc(sizeof(*attrs) * ARRAY_SIZE(default_attrs));
 	memcpy(attrs, default_attrs, sizeof(default_attrs));
 	pd->attrs = attrs;
-
 	for (i = 0; i < ARRAY_SIZE(default_attrs); i++) {
 		attr = &attrs[i];
-
 		attr->inherit = 1;
 		attr->disabled = 1;
 		attr->enable_on_exec = 0;
@@ -715,7 +702,6 @@ static struct perf_data *initialize(pid_t pid, int cpu, int mode, int excl)
 		if (unlikely(pd->fds[i] < 0))
 			panic("sys_perf_event_open failed: %s\n", strerror(errno));
 	}
-
 	pd->group = pd->fds[0];
 	return pd;
 }
@@ -729,16 +715,13 @@ static uint64_t read_counter(struct perf_data *pd, int counter)
 {
 	int ret;
 	uint64_t value;
-
 	if (counter == INTERNAL_SW_WALL_TIME)
 		return (uint64_t) (rdclock() - pd->wall_start);
 	if (unlikely(counter < 0 || counter > MAX_COUNTERS))
 		panic("bug! invalid counter value!\n");
-
 	ret = read(pd->fds[counter], &value, sizeof(uint64_t));
 	if (unlikely(ret != sizeof(uint64_t)))
 		panic("perf_counter read error!\n");
-
 	return value;
 }
 
@@ -768,22 +751,18 @@ static void enable_counter(struct perf_data *pd, int counter)
 		if (unlikely(pd->fds[counter] < 0))
 			panic("sys_perf_event_open failed!\n");
 	}
-
 	ret = ioctl(pd->fds[counter], PERF_EVENT_IOC_ENABLE);
 	if (ret)
 		panic("error enabling perf counter!\n");
-
 	pd->wall_start = rdclock();
 }
 
 static void enable_all_counter(struct perf_data *pd)
 {
 	int ret, i;
-
 	for (i = 0; i < MAX_COUNTERS; i++) {
 		enable_counter(pd, i);
 	}
-
 	/* XXX: Only group leader? */
 #if 0
 	for (i = 0; i < MAX_COUNTERS; i++) {
@@ -799,12 +778,10 @@ static void enable_all_counter(struct perf_data *pd)
 static void disable_counter(struct perf_data *pd, int counter)
 {
 	int ret;
-
 	if (unlikely(counter < 0 || counter >= MAX_COUNTERS))
 		panic("bug! invalid counter value!\n");
 	if (pd->fds[counter] == FDS_INVALID)
 		return;
-
 	ret = ioctl(pd->fds[counter], PERF_EVENT_IOC_DISABLE);
 	if (ret)
 		panic("error disabling perf counter!\n");
@@ -813,7 +790,6 @@ static void disable_counter(struct perf_data *pd, int counter)
 static void disable_all_counter(struct perf_data *pd)
 {
 	int ret, i;
-
 	/* XXX: Only group leader? */
 	for (i = 0; i < MAX_COUNTERS; i++) {
 		disable_counter(pd, i);
@@ -823,7 +799,6 @@ static void disable_all_counter(struct perf_data *pd)
 static void cleanup(struct perf_data *pd)
 {
 	int i;
-
 	for (i = 0; i < ARRAY_SIZE(default_attrs); i++)
 		if (pd->fds[i] >= 0)
 			close(pd->fds[i]);
@@ -834,17 +809,14 @@ static void cleanup(struct perf_data *pd)
 static void list_counter(void)
 {
 	int i;
-
 	for (i = 0; i < ARRAY_SIZE(whole_map); i++)
 		printf("%s\n", whole_map[i].name);
-
 	die();
 }
 
 static enum tracepoint lookup_counter(char *name)
 {
 	int i;
-
 	for (i = 0; i < ARRAY_SIZE(whole_map); i++) 
 		if (!strncmp(whole_map[i].name, name, sizeof(whole_map[i].name) - 1))
 			return whole_map[i].tracepoint;
@@ -854,28 +826,28 @@ static enum tracepoint lookup_counter(char *name)
 static void print_whole_result(struct perf_data *pd)
 {
 	uint64_t tmp1, tmp2;
-
 	printf("Software counters:\n");
 	printf("  CPU clock ticks %" PRIu64 "\n", read_counter(pd, COUNT_SW_CPU_CLOCK));
-	printf("  task clock ticks %" PRIu64 "\n", read_counter(pd, COUNT_SW_TASK_CLOCK));
+	printf("  Task clock ticks %" PRIu64 "\n", read_counter(pd, COUNT_SW_TASK_CLOCK));
 	printf("  CPU context switches %" PRIu64 "\n", read_counter(pd, COUNT_SW_CONTEXT_SWITCHES));
 	printf("  CPU migrations %" PRIu64 "\n", read_counter(pd, COUNT_SW_CPU_MIGRATIONS));
-	printf("  pagefaults/minor/major %" PRIu64 "/%" PRIu64 "/%" PRIu64 "\n",
+	printf("  Pagefaults/minor/major %" PRIu64 "/%" PRIu64 "/%" PRIu64 "\n",
 	       read_counter(pd, COUNT_SW_PAGE_FAULTS),
 	       read_counter(pd, COUNT_SW_PAGE_FAULTS_MIN),
 	       read_counter(pd, COUNT_SW_PAGE_FAULTS_MAJ));
 	printf("Hardware counters:\n");
-	printf("  CPU cycles %" PRIu64 "\n", read_counter(pd, COUNT_HW_CPU_CYCLES));
-	printf("  instructions %" PRIu64 "\n", read_counter(pd, COUNT_HW_INSTRUCTIONS));
+//	printf("  CPU cycles %" PRIu64 "\n", read_counter(pd, COUNT_HW_CPU_CYCLES));
+	printf("  Instructions %" PRIu64 "\n", read_counter(pd, COUNT_HW_INSTRUCTIONS));
 	tmp1 = read_counter(pd, COUNT_HW_CACHE_REFERENCES);
 	tmp2 = read_counter(pd, COUNT_HW_CACHE_MISSES);
-	printf("  cache references %" PRIu64 "\n", tmp1);
-	printf("  cache misses (rate) %" PRIu64 " (%.4lf %%)\n", tmp2, (1.0 * tmp2 / tmp1) * 100.0);
+	printf("  Cache references %" PRIu64 "\n", tmp1);
+	printf("  Cache misses (rate) %" PRIu64 " (%.4lf %%)\n", tmp2, (1.0 * tmp2 / tmp1) * 100.0);
 	tmp1 = read_counter(pd, COUNT_HW_BRANCH_INSTRUCTIONS);
 	tmp2 = read_counter(pd, COUNT_HW_BRANCH_MISSES);
-	printf("  branch instructions %" PRIu64 "\n", tmp1);
-	printf("  branch misses (rate) %" PRIu64 " (%.4lf %%)\n", tmp2, (1.0 * tmp2 / tmp1) * 100.0);
-	printf("  bus cycles %" PRIu64 "\n", read_counter(pd, COUNT_HW_BUS_CYCLES));
+	printf("  Branch instructions %" PRIu64 "\n", tmp1);
+	printf("  Branch misses (rate) %" PRIu64 " (%.4lf %%)\n", tmp2, (1.0 * tmp2 / tmp1) * 100.0);
+	printf("  Bus cycles %" PRIu64 "\n", read_counter(pd, COUNT_HW_BUS_CYCLES));
+#if 0
 	printf("L1D, data cache:\n");
 	printf("  loads %" PRIu64 "\n", read_counter(pd, COUNT_HW_CACHE_L1D_LOADS));
 	printf("  load misses %" PRIu64 "\n", read_counter(pd, COUNT_HW_CACHE_L1D_LOADS_MISSES));
@@ -901,8 +873,9 @@ static void print_whole_result(struct perf_data *pd)
 	printf("BPU, branch prediction unit:\n");
 	printf("  loads %" PRIu64 "\n", read_counter(pd, COUNT_HW_CACHE_BPU_LOADS));
 	printf("  load misses %" PRIu64 "\n", read_counter(pd, COUNT_HW_CACHE_BPU_LOADS_MISSES));
+#endif
 	printf("Wall-clock time elapsed:\n");
-	printf("  usec %" PRIu64 "\n", read_counter(pd, INTERNAL_SW_WALL_TIME));
+	printf("  nsec %" PRIu64 "\n", read_counter(pd, INTERNAL_SW_WALL_TIME));
 }
 
 int main(int argc, char **argv)
