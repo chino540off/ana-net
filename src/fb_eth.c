@@ -404,6 +404,7 @@ static int __init init_fb_eth_module(void)
 
 static void __exit cleanup_fb_eth_module(void)
 {
+	synchronize_rcu();
 	vlink_subsys_unregister_batch(&fb_eth_sys);
 	printk(KERN_INFO "[lana] Ethernet vlink layer removed!\n");
 }
