@@ -212,6 +212,7 @@ static int __init init_fb_tee_module(void)
 
 static void __exit cleanup_fb_tee_module(void)
 {
+	synchronize_rcu();
 	unregister_fblock_type(&fb_tee_factory);
 }
 

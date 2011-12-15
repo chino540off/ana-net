@@ -259,6 +259,7 @@ static int __init init_fb_counter_module(void)
 
 static void __exit cleanup_fb_counter_module(void)
 {
+	synchronize_rcu();
 	unregister_fblock_type(&fb_counter_factory);
 }
 

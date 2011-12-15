@@ -522,6 +522,7 @@ static int __init init_fb_bpf_module(void)
 
 static void __exit cleanup_fb_bpf_module(void)
 {
+	synchronize_rcu();
 	unregister_fblock_type(&fb_bpf_factory);
 }
 

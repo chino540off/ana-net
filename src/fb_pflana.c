@@ -746,6 +746,7 @@ static int __init init_fb_pflana_module(void)
 
 static void __exit cleanup_fb_pflana_module(void)
 {
+	synchronize_rcu();
 	cleanup_fb_pflana();
 }
 

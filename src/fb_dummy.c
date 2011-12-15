@@ -195,6 +195,7 @@ static int __init init_fb_dummy_module(void)
 
 static void __exit cleanup_fb_dummy_module(void)
 {
+	synchronize_rcu();
 	unregister_fblock_type(&fb_dummy_factory);
 }
 
