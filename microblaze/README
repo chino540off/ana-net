@@ -1,2 +1,23 @@
-For Xilinx Tools 13.2!
+For Xilinx Tools 13.2, do not use 12.x tools! Generating ACE files seem to
+be broken in 12.x! Important: crosscompile the kernel in Little-Endian!
+
+Use the following Git repositories:
+   Linux: git clone git://git.xilinx.com/linux-2.6-xlnx.git
+   GNU toolchain: git://git.xilinx.com/xldk/microblaze_v2.0_le.git
+   Device Tree Gen: git://git.xilinx.com/xldk/device-tree.git
+   Eventually: git://github.com/borkmann/xilinx-usb-driver.git
+
+Steps:
+  - Create the system.bit in the EDK
+  - Clone the Linux and GNU toolchain
+  - Copy misc/xilinx.dts into linux-2.6-xlnx/arch/microblaze/boot/dts
+  - Copy misc/kernel.config into linux-2.6-xlnx/.config
+  - make CROSS_COMPILE=/<path-to>/microblaze_v2.0_le/microblazeel-unknown-linux-gnu/bin/microblazeel-unknown-linux-gnu- ARCH=microblaze -j8 simpleImage.xilinx
+  - Create folder "genace"
+  - Copy "system.bit" into "genace"
+  - Copy "simpleImage.xilinx" into "genace"
+  - Cd into "genace"
+  - xmd -tcl genace.tcl -hw system.bit -elf simpleImage.xilinx -ace linux.ace -board ml605 -target mdm
+  - Copy linux.ace onto CF card, set DIP switch to Sysace
+
 Special thanks to Eli Billauer!
