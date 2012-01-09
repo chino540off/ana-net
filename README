@@ -26,7 +26,6 @@ How to browse the source:
                       uses PF_LANA BSD sockets
    sem/             - Contains a set of semantic patches that can be
                       used with Coccinelle (http://coccinelle.lip6.fr/)
-   opt/             - Contains misc stuff, not really important
    doc/             - The name says everything, you need LaTeX for this
 
 Within the src/ folder, there are files named:
