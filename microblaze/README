@@ -10,6 +10,7 @@ Use the following Git repositories:
 Steps:
   - Create the system.bit in the EDK
   - Clone the Linux and GNU toolchain
+  - Copy microblaze_v2.0_le/initramfs_minimal_le.cpio.gz linux-2.6-xlnx
   - Copy misc/xilinx.dts into linux-2.6-xlnx/arch/microblaze/boot/dts
   - Copy misc/kernel.config into linux-2.6-xlnx/.config
   - make CROSS_COMPILE=/<path-to>/microblaze_v2.0_le/microblazeel-unknown-linux-gnu/bin/microblazeel-unknown-linux-gnu- ARCH=microblaze -j8 simpleImage.xilinx
