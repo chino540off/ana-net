@@ -1,4 +1,6 @@
 #!/bin/sh
+# Copyright 2012 Daniel Borkmann <borkmann@gnumaniacs.org>
+# Licensed under GPL version 2
 usage="Usage: cpio_manage.sh <unpack|pack> <initramfs.cpio.gz> <out/in dir>";
 if test $# -lt 3 ; then
 	echo $usage;
@@ -14,12 +16,12 @@ dir="$3"
 case "$arg" in
 p|pa|pac|pack)
 	cd $dir
-	find . | cpio -o | gzip -c > $ramfs
+	find . -print0 | cpio -0 -ov -H newc | gzip -c > $ramfs
 	;;
 u|un|unp|unpa|unpac|unpack)
 	mkdir -p $dir
 	cd $dir
-	gunzip -c $ramfs | cpio -id
+	gunzip -c $ramfs | cpio -idv -H newc --no-absolute-filenames
 	;;
 *)
 	echo $usage;
