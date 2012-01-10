@@ -2,7 +2,7 @@
 # Copyright 2012 Daniel Borkmann <borkmann@gnumaniacs.org>
 # Licensed under GPL version 2
 usage="Usage: cpio_manage.sh <unpack|pack> <initramfs.cpio.gz> <out/in dir>";
-if test $# -lt 3 ; then
+if [ "$#" -lt "3" ]; then
 	echo $usage;
 	exit
 fi
