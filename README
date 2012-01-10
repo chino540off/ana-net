@@ -27,6 +27,8 @@ How to browse the source:
    sem/             - Contains a set of semantic patches that can be
                       used with Coccinelle (http://coccinelle.lip6.fr/)
    microblaze/      - SoC design files and kernel conf for the ML605 board
+                      LANA microblaze port:
+			   https://github.com/borkmann/linux-microblaze
    doc/             - The name says everything, you need LaTeX for this
 
 Within the src/ folder, there are files named:
