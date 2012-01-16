@@ -24,7 +24,9 @@ UcfFile: data/system.ucf
 EnableParTimingError: 1
 ShowLicenseDialog: 0
 ICacheAddr: DDR3_SDRAM,C_S_AXI_BASEADDR
+ICacheAddr: DDR3_SDRAM,C_S_AXI_CTRL_BASEADDR
 DCacheAddr: DDR3_SDRAM,C_S_AXI_BASEADDR
+DCacheAddr: DDR3_SDRAM,C_S_AXI_CTRL_BASEADDR
 Processor: microblaze_0
 ElfImp: 
 ElfSim: 
