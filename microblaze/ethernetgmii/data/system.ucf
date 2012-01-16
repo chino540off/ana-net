@@ -142,7 +142,7 @@ NET "*ETHERNET*/AXI_STR_RXS_ACLK" TNM_NET = "axistream_clk";
 #
 # Changed NET name
 # NET "GMII_RX_CLK" TNM_NET = "phy_clk_rx";
-NET "*/rx_client_clk" TNM_NET = "phy_clk_rx";
+# NET "*/rx_client_clk" TNM_NET = "phy_clk_rx";
 TIMEGRP "v6_emac_v1_3_clk_phy_rx" = "phy_clk_rx";
 TIMESPEC "TS_v6_emac_v1_3_clk_phy_rx" = PERIOD "v6_emac_v1_3_clk_phy_rx" 7.5 ns HIGH 50 %;
 
@@ -177,7 +177,7 @@ TIMESPEC "TS_v6_emac_v1_3_clk_ref_gtx" = PERIOD "v6_emac_v1_3_clk_ref_gtx" 8 ns 
 # Changed NET name
 # NET "tx_clk" TNM_NET = "ref_mux_clk";
 # Changed TMN_NET name for tx_clk to keep time domain crossing constraints consistent in EDK core UCF files
-NET "*/tx_client_clk" TNM_NET = "phy_clk_tx";
+# NET "*/tx_client_clk" TNM_NET = "phy_clk_tx";
 TIMEGRP "v6_emac_v1_3_clk_ref_mux" = "phy_clk_tx";
 TIMESPEC "TS_v6_emac_v1_3_clk_ref_mux" = PERIOD "v6_emac_v1_3_clk_ref_mux" TS_v6_emac_v1_3_clk_ref_gtx HIGH 50%;
 
@@ -209,18 +209,18 @@ TIMESPEC "TS_ref_clk" = PERIOD "ref_clk" 5 ns HIGH 50 %;
 
 # Set the IDELAY values on the PHY inputs, tuned for this example design.
 # These values should be modified to suit your design.
-INST "*gmii*ideldv" IDELAY_VALUE = 30;
-INST "*gmii*ideld0" IDELAY_VALUE = 25;
-INST "*gmii*ideld1" IDELAY_VALUE = 31;
-INST "*gmii*ideld2" IDELAY_VALUE = 31;
-INST "*gmii*ideld3" IDELAY_VALUE = 27;
-INST "*gmii*ideld4" IDELAY_VALUE = 29;
-INST "*gmii*ideld5" IDELAY_VALUE = 31;
-INST "*gmii*ideld6" IDELAY_VALUE = 31;
-INST "*gmii*ideld7" IDELAY_VALUE = 31;
-INST "*gmii*ideler" IDELAY_VALUE = 22;
-INST "*gmii_rxc_delay" IDELAY_VALUE = 0;
-INST "*gmii_rxc_delay" SIGNAL_PATTERN = CLOCK;
+# INST "*gmii*ideldv" IDELAY_VALUE = 30;
+# INST "*gmii*ideld0" IDELAY_VALUE = 25;
+# INST "*gmii*ideld1" IDELAY_VALUE = 31;
+# INST "*gmii*ideld2" IDELAY_VALUE = 31;
+# INST "*gmii*ideld3" IDELAY_VALUE = 27;
+# INST "*gmii*ideld4" IDELAY_VALUE = 29;
+# INST "*gmii*ideld5" IDELAY_VALUE = 31;
+# INST "*gmii*ideld6" IDELAY_VALUE = 31;
+# INST "*gmii*ideld7" IDELAY_VALUE = 31;
+# INST "*gmii*ideler" IDELAY_VALUE = 22;
+# INST "*gmii_rxc_delay" IDELAY_VALUE = 0;
+# INST "*gmii_rxc_delay" SIGNAL_PATTERN = CLOCK;
 
 # Signal trace properties for ML605 Board used in offset in constraints below
 
@@ -272,12 +272,12 @@ NET ETHERNET_RX_ER  OFFSET = IN 2.192 ns VALID 3 ns BEFORE "ETHERNET_RX_CLK";
 # INST "*gmii?GMII_TXD_?"   IOB = true;
 # INST "*gmii?GMII_TX_EN"   IOB = true;
 # INST "*gmii?GMII_TX_ER"   IOB = true;
-INST "*gmii?RXD_TO_MAC*"  IOB = force;
-INST "*gmii?RX_DV_TO_MAC" IOB = force;
-INST "*gmii?RX_ER_TO_MAC" IOB = force;
-INST "*gmii?GMII_TXD_?"   IOB = force;
-INST "*gmii?GMII_TX_EN"   IOB = force;
-INST "*gmii?GMII_TX_ER"   IOB = force;
+# INST "*gmii?RXD_TO_MAC*"  IOB = force;
+# INST "*gmii?RX_DV_TO_MAC" IOB = force;
+# INST "*gmii?RX_ER_TO_MAC" IOB = force;
+# INST "*gmii?GMII_TXD_?"   IOB = force;
+# INST "*gmii?GMII_TX_EN"   IOB = force;
+# INST "*gmii?GMII_TX_ER"   IOB = force;
 
 ############################################################
 # Crossing of Clock Domain Constraints: please do not edit #
