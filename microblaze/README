@@ -2,7 +2,7 @@ For Xilinx Tools 13.2, do not use 12.x tools! Generating ACE files seem to
 be broken in 12.x! Important: crosscompile the kernel in Little-Endian!
 
 Use the following Git repositories:
-   Linux: git clone git://developer.petalogix.com/linux-2.6-microblaze.git
+   Linux: git clone git://github.com/borkmann/linux-microblaze.git
    GNU toolchain: git://git.xilinx.com/xldk/microblaze_v2.0_le.git
    Device Tree Gen: git://git.xilinx.com/xldk/device-tree.git
    Eventually: git://github.com/borkmann/xilinx-usb-driver.git
