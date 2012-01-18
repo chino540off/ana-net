@@ -1,0 +1,27 @@
+Signed-off-by: Ariane Keller <ariane.keller <at> tik.ee.ethz.ch>
+Signed-off-by: Daniel Borkmann <daniel.borkmann <at> tik.ee.ethz.ch>
+
+diff --git a/arch/microblaze/Kconfig b/arch/microblaze/Kconfig
+index 74f23a4..c8d6efb 100644
+--- a/arch/microblaze/Kconfig
++++ b/arch/microblaze/Kconfig
+@@ -19,6 +19,7 @@ config MICROBLAZE
+ 	select GENERIC_IRQ_SHOW
+ 	select GENERIC_PCI_IOMAP
+ 	select GENERIC_CPU_DEVICES
++	select GENERIC_ATOMIC64
+ 
+ config SWAP
+ 	def_bool n
+diff --git a/arch/microblaze/include/asm/atomic.h b/arch/microblaze/include/asm/atomic.h
+index 6d2e1d4..615f539 100644
+--- a/arch/microblaze/include/asm/atomic.h
++++ b/arch/microblaze/include/asm/atomic.h
+@@ -2,6 +2,7 @@
+ #define _ASM_MICROBLAZE_ATOMIC_H
+ 
+ #include <asm-generic/atomic.h>
++#include <asm-generic/atomic64.h>
+ 
+ /*
+  * Atomically test *v and decrement if it is greater than 0.
