@@ -1,5 +1,5 @@
-Signed-off-by: Ariane Keller <ariane.keller <at> tik.ee.ethz.ch>
-Signed-off-by: Daniel Borkmann <daniel.borkmann <at> tik.ee.ethz.ch>
+Signed-off-by: Ariane Keller <ariane.keller@tik.ee.ethz.ch>
+Signed-off-by: Daniel Borkmann <daniel.borkmann@tik.ee.ethz.ch>
 
 diff --git a/arch/microblaze/Kconfig b/arch/microblaze/Kconfig
 index 74f23a4..c8d6efb 100644
