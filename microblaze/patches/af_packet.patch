@@ -1,0 +1,20 @@
+Signed-off-by: Daniel Borkmann <danborkmann@googlemail.com>
+Cc: Eric Dumazet <eric.dumazet@gmail.com>
+---
+  net/packet/af_packet.c |    2 --
+  1 files changed, 0 insertions(+), 2 deletions(-)
+
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index fabb4fa..886ae50 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -1170,8 +1170,6 @@ static void tpacket_destruct_skb(struct sk_buff *skb)
+  	struct packet_sock *po = pkt_sk(skb->sk);
+  	void *ph;
+
+-	BUG_ON(skb == NULL);
+-
+  	if (likely(po->tx_ring.pg_vec)) {
+  		ph = skb_shinfo(skb)->destructor_arg;
+  		BUG_ON(__packet_get_status(po, ph) != TP_STATUS_SENDING);
+
