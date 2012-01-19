@@ -2,19 +2,26 @@ Against net-next, rev 356b95424cfb456e14a59eaa579422ce014c424b
 
 Signed-off-by: Ariane Keller <ariane.keller@tik.ee.ethz.ch>
 Signed-off-by: Daniel Borkmann <daniel.borkmann@tik.ee.ethz.ch>
+---
+ MAINTAINERS                                       |    6 +
+ drivers/net/ethernet/xilinx/Kconfig               |    8 +
+ drivers/net/ethernet/xilinx/Makefile              |    2 +
+ drivers/net/ethernet/xilinx/xilinx_axienet.h      |  508 +++++++
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 1682 +++++++++++++++++++++
+ drivers/net/ethernet/xilinx/xilinx_axienet_mdio.c |  238 +++
+ 6 files changed, 2444 insertions(+), 0 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
 index 4babed7..4d0b9f7 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -7459,6 +7459,13 @@ S:	Supported
+@@ -7459,6 +7459,12 @@ S:	Supported
  F:	Documentation/filesystems/xfs.txt
  F:	fs/xfs/
  
 +XILINX AXI ETHERNET DRIVER
 +M:	Ariane Keller <ariane.keller@tik.ee.ethz.ch>
 +M:	Daniel Borkmann <daniel.borkmann@tik.ee.ethz.ch>
-+W:	http://www.gnumaniacs.org/
 +S:	Maintained
 +F:	drivers/net/ethernet/xilinx/xilinx_axienet*
 +
@@ -569,7 +576,7 @@ new file mode 100644
 index 0000000..7fe9a1b
 --- /dev/null
 +++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -0,0 +1,1683 @@
+@@ -0,0 +1,1682 @@
 +/*
 + * Xilinx Axi Ethernet device driver
 + *
@@ -2252,7 +2259,6 @@ index 0000000..7fe9a1b
 +MODULE_DESCRIPTION("Xilinx Axi Ethernet driver");
 +MODULE_AUTHOR("Xilinx");
 +MODULE_LICENSE("GPL");
-+
 diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_mdio.c b/drivers/net/ethernet/xilinx/xilinx_axienet_mdio.c
 new file mode 100644
 index 0000000..d70b6e7
