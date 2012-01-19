@@ -1,5 +1,9 @@
 Signed-off-by: Ariane Keller <ariane.keller@tik.ee.ethz.ch>
 Signed-off-by: Daniel Borkmann <daniel.borkmann@tik.ee.ethz.ch>
+---
+ arch/microblaze/Kconfig              |    1 +
+ arch/microblaze/include/asm/atomic.h |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
 
 diff --git a/arch/microblaze/Kconfig b/arch/microblaze/Kconfig
 index 74f23a4..c8d6efb 100644
