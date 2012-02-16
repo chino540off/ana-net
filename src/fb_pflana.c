@@ -331,16 +331,9 @@ static int lana_proto_sendmsg(struct kiocb *iocb, struct sock *sk,
 	skb->dev = dev;
 	skb->sk = sk;
 	skb->protocol = htons(ETH_P_ALL); //FIXME
-
 	skb_orphan(skb);
-
 	dev_put(dev);
 
-//	err = dev_queue_xmit(skb);
-//	if (err > 0)
-//		err = net_xmit_errno(err);
-
-#if 1
 	rcu_read_lock();
 	fb_priv_cpu = this_cpu_ptr(rcu_dereference(fb->private_data));
 	do {
@@ -348,10 +341,9 @@ static int lana_proto_sendmsg(struct kiocb *iocb, struct sock *sk,
 		write_next_idp_to_skb(skb, fb->idp,
 				      fb_priv_cpu->port[TYPE_EGRESS]);
         } while (read_seqretry(&fb_priv_cpu->lock, seq));
-	rcu_read_unlock();
 
         process_packet(skb, TYPE_EGRESS);
-#endif
+	rcu_read_unlock();
 
 	return (err >= 0) ? len : err;
 drop:
